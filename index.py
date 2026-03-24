@@ -32,14 +32,25 @@ def sha1Decrypt(hash):
 
     return decryptHash
 
+def isValid(value):
+    return bool(value)
+
 hash = input("Input Hash: ")
 hashType = hashIdentifier(hash)
 
 if hashType == "md5":
     decryptHash = md5Decrypt(hash)
-    print(f"Found! Type: {hashType} DecryptHash: {decryptHash}")
+
+    if isValid(decryptHash):
+        print(f"Found!\nHashType: {hashType}\nDecryptHash: {decryptHash}")
+    else:
+        print("Invaild Hash!")
 elif hashType == "sha1":
     decryptHash = sha1Decrypt(hash)
-    print(f"Found! Type: {hashType} DecryptHash: {decryptHash}")
+    
+    if isValid(decryptHash):
+        print(f"Found!\nHashType: {hashType}\nDecryptHash: {decryptHash}")
+    else:
+        print("Invaild Hash!")
 else:
     print("Unknown hash!")
