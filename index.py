@@ -53,4 +53,4 @@ elif hashType == "sha1":
     else:
         print("Invaild Hash!")
 else:
-    print("Unknown hash!")
+    print("Unknown Hash!")
