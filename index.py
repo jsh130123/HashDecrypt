@@ -4,6 +4,10 @@
 import requests
 from bs4 import BeautifulSoup
 
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'
+}
+
 def hashIdentifier(hash):
     hashLen = len(hash)
 
@@ -15,18 +19,14 @@ def hashIdentifier(hash):
         return False
     
 def md5Decrypt(hash):
-    res = requests.get(f"https://md5.gromweb.com/?md5={hash}", headers={
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'
-    })
+    res = requests.get(f"https://md5.gromweb.com/?md5={hash}", headers=headers)
     soup = BeautifulSoup(res.text, "html.parser")
     decryptHash = soup.select_one('#string').get("value")
 
     return decryptHash
     
 def sha1Decrypt(hash):
-    res = requests.get(f"https://sha1.gromweb.com/?hash={hash}", headers={
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'
-    })
+    res = requests.get(f"https://sha1.gromweb.com/?hash={hash}", headers=headers)
     soup = BeautifulSoup(res.text, "html.parser")
     decryptHash = soup.select_one('#string').get("value")
 
@@ -42,15 +42,21 @@ if hashType == "md5":
     decryptHash = md5Decrypt(hash)
 
     if isValid(decryptHash):
-        print(f"Found!\nHashType: {hashType}\nDecryptHash: {decryptHash}")
+        print(f"Found!")
+        print(f"HashType: {hashType}")
+        print(f"DecryptHash: {decryptHash}")
     else:
         print("Invaild Hash!")
+
 elif hashType == "sha1":
     decryptHash = sha1Decrypt(hash)
     
     if isValid(decryptHash):
-        print(f"Found!\nHashType: {hashType}\nDecryptHash: {decryptHash}")
+        print(f"Found!")
+        print(f"HashType: {hashType}")
+        print(f"DecryptHash: {decryptHash}")
     else:
         print("Invaild Hash!")
+        
 else:
     print("Unknown Hash!")
